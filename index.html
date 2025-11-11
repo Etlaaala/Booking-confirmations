@@ -4,90 +4,528 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تأكيد حجز - Booking Confirmation Generator</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
             font-family: 'Tajawal', sans-serif;
+            margin: 0;
+            padding: 0;
         }
     </style>
 </head>
 <body>
     <div id="root"></div>
-    
+
     <script type="text/babel">
         const { useState } = React;
 
-        // Simple icon components
-        const Download = () => <span className="material-icons">download</span>;
-        const Plus = () => <span className="material-icons">add</span>;
-        const Trash2 = () => <span className="material-icons">delete</span>;
-        const Plane = () => <span className="material-icons">flight</span>;
-        const Hotel = () => <span className="material-icons">hotel</span>;
-        const User = () => <span className="material-icons">person</span>;
-        const Info = () => <span className="material-icons">info</span>;
-        const Car = () => <span className="material-icons">directions_car</span>;
+        // Lucide React icons replacement with simple SVG components
+        const Download = () => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+        );
+
+        const Plus = () => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+        );
+
+        const Trash2 = () => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                <line x1="10" y1="11" x2="10" y2="17"></line>
+                <line x1="14" y1="11" x2="14" y2="17"></line>
+            </svg>
+        );
+
+        const Plane = () => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"></path>
+            </svg>
+        );
+
+        const Hotel = () => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M2 20v-5c0-1.1.9-2 2-2h3c1.1 0 2 .9 2 2v5"></path>
+                <path d="M15 20v-5c0-1.1.9-2 2-2h3c1.1 0 2 .9 2 2v5"></path>
+                <path d="M2 10h20"></path>
+                <rect x="6" y="5" width="2" height="2"></rect>
+                <rect x="10" y="5" width="2" height="2"></rect>
+                <rect x="14" y="5" width="2" height="2"></rect>
+            </svg>
+        );
+
+        const User = () => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+        );
+
+        const Info = () => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+        );
+
+        const Car = () => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2"></path>
+                <circle cx="6.5" cy="16.5" r="2.5"></circle>
+                <circle cx="16.5" cy="16.5" r="2.5"></circle>
+            </svg>
+        );
 
         function BookingConfirmationGenerator() {
-            const [formData, setFormData] = useState({
-                guestInfoEnabled: true,
-                domesticFlightsEnabled: true,
-                internationalFlightsEnabled: true,
-                hotelsEnabled: true,
-                carRentalEnabled: false,
-                importantNotesEnabled: true,
-                guestName: 'Mrs Duaa Aldaoud',
-                nationality: 'SAU',
-                ticketNumber: '429-EEU5NN / 607-2412407240',
-                bookingId: 'BB991499 & BB991500',
-                domesticFlights: [
-                    {
-                        id: 1,
-                        airline: 'Thai AirAsia',
-                        airlineLogo: 'https://sfile.chatglm.cn/images-ppt/a6e3eb1cb12e.svg',
-                        flightNumber: 'FD-4110',
-                        departureAirport: 'BKK',
-                        departureAirportName: 'Bangkok Intl',
-                        departureTime: '12:05',
-                        departureDate: '10 Jan 2026',
-                        arrivalAirport: 'HKT',
-                        arrivalAirportName: 'Phuket Intl',
-                        arrivalTime: '13:45',
-                        arrivalDate: '10 Jan 2026',
-                        duration: '1 hr 40 min',
-                        cabinBaggage: '7Kg',
-                        checkedBaggage: '20KG',
-                        status: 'Confirmed'
-                    }
-                ],
-                internationalFlights: [],
-                hotels: [],
-                carRentals: [],
-                flightNotes: [
-                    'وفقاً لإرشادات IATA والطيران، من الضروري إجراء تسجيل الوصول عبر الإنترنت قبل المغادرة'
-                ],
-                hotelNotes: []
-            });
+  const [formData, setFormData] = useState({
+    // Section Toggles
+    guestInfoEnabled: true,
+    domesticFlightsEnabled: true,
+    internationalFlightsEnabled: true,
+    hotelsEnabled: true,
+    carRentalEnabled: false,
+    importantNotesEnabled: true,
+    
+    // Guest Information
+    guestName: 'Mrs Duaa Aldaoud',
+    nationality: 'SAU',
+    ticketNumber: '429-EEU5NN / 607-2412407240',
+    bookingId: 'BB991499 & BB991500',
+    
+    // Domestic Flights
+    domesticFlights: [
+      {
+        id: 1,
+        airline: 'Thai AirAsia',
+        airlineLogo: 'https://sfile.chatglm.cn/images-ppt/a6e3eb1cb12e.svg',
+        flightNumber: 'FD-4110',
+        departureAirport: 'BKK',
+        departureAirportName: 'Bangkok Int\'l',
+        departureTime: '12:05',
+        departureDate: '10 Jan 2026',
+        arrivalAirport: 'HKT',
+        arrivalAirportName: 'Phuket Int\'l',
+        arrivalTime: '13:45',
+        arrivalDate: '10 Jan 2026',
+        duration: '1 hr 40 min',
+        cabinBaggage: '7Kg',
+        checkedBaggage: '20KG',
+        status: 'Confirmed'
+      },
+      {
+        id: 2,
+        airline: 'Thai AirAsia',
+        airlineLogo: 'https://sfile.chatglm.cn/images-ppt/a6e3eb1cb12e.svg',
+        flightNumber: 'FD-4125',
+        departureAirport: 'HKT',
+        departureAirportName: 'Phuket Int\'l',
+        departureTime: '10:05',
+        departureDate: '13 Jan 2026',
+        arrivalAirport: 'BKK',
+        arrivalAirportName: 'Bangkok Int\'l',
+        arrivalTime: '11:35',
+        arrivalDate: '13 Jan 2026',
+        duration: '1 hr 30 min',
+        cabinBaggage: '7Kg',
+        checkedBaggage: '20KG',
+        status: 'Confirmed'
+      }
+    ],
+    
+    // International Flights
+    internationalFlights: [
+      {
+        id: 1,
+        airline: 'Etihad Airways',
+        airlineLogo: 'https://sfile.chatglm.cn/images-ppt/27a479316b90.png',
+        flightNumber: 'EY-554',
+        departureAirport: 'RUH',
+        departureAirportName: 'King Khaled Intl',
+        departureTerminal: 'Terminal 3',
+        departureTime: '10:30',
+        departureDate: '09 Jan 2026',
+        arrivalAirport: 'AUH',
+        arrivalAirportName: 'Abu Dhabi Intl',
+        arrivalTerminal: 'Terminal A',
+        arrivalTime: '13:15',
+        arrivalDate: '09 Jan 2026',
+        duration: '2 hr 45 min',
+        cabinBaggage: '7Kg',
+        checkedBaggage: '25KG',
+        status: 'Confirmed',
+        layover: '',
+        layoverDuration: ''
+      },
+      {
+        id: 2,
+        airline: 'Etihad Airways',
+        airlineLogo: 'https://sfile.chatglm.cn/images-ppt/27a479316b90.png',
+        flightNumber: 'EY-400',
+        departureAirport: 'AUH',
+        departureAirportName: 'Abu Dhabi Intl',
+        departureTerminal: 'Terminal A',
+        departureTime: '14:15',
+        departureDate: '09 Jan 2026',
+        arrivalAirport: 'BKK',
+        arrivalAirportName: 'Bangkok Intl',
+        arrivalTerminal: '',
+        arrivalTime: '23:20',
+        arrivalDate: '09 Jan 2026',
+        duration: '7 hr 05 min',
+        cabinBaggage: '7Kg',
+        checkedBaggage: '25KG',
+        status: 'Confirmed',
+        layover: '1 hr 0 min at Abu Dhabi Intl',
+        layoverDuration: '1 hr 0 min'
+      },
+      {
+        id: 3,
+        airline: 'Etihad Airways',
+        airlineLogo: 'https://sfile.chatglm.cn/images-ppt/27a479316b90.png',
+        flightNumber: 'EY-401',
+        departureAirport: 'BKK',
+        departureAirportName: 'Bangkok Intl',
+        departureTerminal: '',
+        departureTime: '02:55',
+        departureDate: '14 Jan 2026',
+        arrivalAirport: 'AUH',
+        arrivalAirportName: 'Abu Dhabi Intl',
+        arrivalTerminal: 'Terminal A',
+        arrivalTime: '06:45',
+        arrivalDate: '14 Jan 2026',
+        duration: '3 hr 50 min',
+        cabinBaggage: '7Kg',
+        checkedBaggage: '25KG',
+        status: 'Confirmed',
+        layover: '',
+        layoverDuration: ''
+      },
+      {
+        id: 4,
+        airline: 'Etihad Airways',
+        airlineLogo: 'https://sfile.chatglm.cn/images-ppt/27a479316b90.png',
+        flightNumber: 'EY-553',
+        departureAirport: 'AUH',
+        departureAirportName: 'Abu Dhabi Intl',
+        departureTerminal: 'Terminal A',
+        departureTime: '07:55',
+        departureDate: '14 Jan 2026',
+        arrivalAirport: 'RUH',
+        arrivalAirportName: 'King Khaled Intl',
+        arrivalTerminal: 'Terminal 3',
+        arrivalTime: '09:00',
+        arrivalDate: '14 Jan 2026',
+        duration: '1 hr 05 min',
+        cabinBaggage: '7Kg',
+        checkedBaggage: '25KG',
+        status: 'Confirmed',
+        layover: '1 hr 10 min at Abu Dhabi Intl',
+        layoverDuration: '1 hr 10 min'
+      }
+    ],
+    
+    // Hotels
+    hotels: [
+      {
+        id: 1,
+        name: 'JASMINE GRANDE RESIDENCE',
+        image: 'https://sfile.chatglm.cn/images-ppt/267334c918b6.jpg',
+        address: '4338 Rama IV Road, Bangkok',
+        phone: '+6623672882',
+        checkIn: '09 January 2026',
+        checkOut: '10 January 2026',
+        roomType: 'DELUXE, BED AND BREAKFAST',
+        nights: '1',
+        rooms: '1',
+        guests: '1',
+        status: 'Confirmed'
+      },
+      {
+        id: 2,
+        name: 'OAKWOOD STUDIOS SUKHUMVIT BANGKOK',
+        image: 'https://sfile.chatglm.cn/images-ppt/c4f05bd31fee.jpg',
+        address: '70 Sukhumvit Road Sukhumvit 36',
+        phone: '+6620095700',
+        checkIn: '13 January 2026',
+        checkOut: '14 January 2026',
+        roomType: 'Superior King, BREAKFAST, FREE WIFI',
+        nights: '1',
+        rooms: '1',
+        guests: '1',
+        status: 'Confirmed'
+      }
+    ],
+    
+    // Car Rentals
+    carRentals: [
+      {
+        id: 1,
+        carType: 'Toyota Camry 2024',
+        carImage: '',
+        pickupDate: '09 January 2026',
+        returnDate: '14 January 2026',
+        pickupLocation: 'Bangkok Suvarnabhumi Airport',
+        returnLocation: 'Bangkok Suvarnabhumi Airport',
+        company: 'Budget Rent a Car',
+        status: 'Confirmed'
+      }
+    ],
+    
+    // Important Notes
+    flightNotes: [
+      'وفقاً لإرشادات IATA والطيران، من الضروري إجراء تسجيل الوصول عبر الإنترنت قبل المغادرة',
+      'يرجى الحضور إلى المطار قبل 3 ساعات من موعد الرحلات الدولية',
+      'الحقائب المسموح بها: Cabin: 7Kg, Check-in: 25KG'
+    ],
+    hotelNotes: [
+      'سيتم فرض ضريبة مدينة منفصلة على العملاء عند الوصول',
+      'وقت الدخول للفنادق: 14:00، وقت الخروج: 11:00',
+      'يجب الإبلاغ عن جميع الشكاوى إلى الفندق على الفور خلال الإقامة'
+    ]
+  });
 
-            const [activeTab, setActiveTab] = useState('guest');
+  const [activeTab, setActiveTab] = useState('guest');
 
-            const updateField = (field, value) => {
-                setFormData(prev => ({ ...prev, [field]: value }));
-            };
+  // Update basic field
+  const updateField = (field, value) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
 
-            const toggleSection = (sectionName) => {
-                setFormData(prev => ({
-                    ...prev,
-                    [sectionName]: !prev[sectionName]
-                }));
-            };
+  // Domestic Flights Management
+  const addDomesticFlight = () => {
+    const newFlight = {
+      id: Date.now(),
+      airline: '',
+      airlineLogo: '',
+      flightNumber: '',
+      departureAirport: '',
+      departureAirportName: '',
+      departureTime: '',
+      departureDate: '',
+      arrivalAirport: '',
+      arrivalAirportName: '',
+      arrivalTime: '',
+      arrivalDate: '',
+      duration: '',
+      cabinBaggage: '7Kg',
+      checkedBaggage: '20KG',
+      status: 'Confirmed'
+    };
+    setFormData(prev => ({
+      ...prev,
+      domesticFlights: [...prev.domesticFlights, newFlight]
+    }));
+  };
 
-            const generateHTML = () => {
-                return `<!DOCTYPE html>
+  const removeDomesticFlight = (id) => {
+    setFormData(prev => ({
+      ...prev,
+      domesticFlights: prev.domesticFlights.filter(f => f.id !== id)
+    }));
+  };
+
+  const updateDomesticFlight = (id, field, value) => {
+    setFormData(prev => ({
+      ...prev,
+      domesticFlights: prev.domesticFlights.map(flight =>
+        flight.id === id ? { ...flight, [field]: value } : flight
+      )
+    }));
+  };
+
+  // International Flights Management
+  const addInternationalFlight = () => {
+    const newFlight = {
+      id: Date.now(),
+      airline: '',
+      airlineLogo: '',
+      flightNumber: '',
+      departureAirport: '',
+      departureAirportName: '',
+      departureTerminal: '',
+      departureTime: '',
+      departureDate: '',
+      arrivalAirport: '',
+      arrivalAirportName: '',
+      arrivalTerminal: '',
+      arrivalTime: '',
+      arrivalDate: '',
+      duration: '',
+      cabinBaggage: '7Kg',
+      checkedBaggage: '25KG',
+      status: 'Confirmed',
+      layover: '',
+      layoverDuration: ''
+    };
+    setFormData(prev => ({
+      ...prev,
+      internationalFlights: [...prev.internationalFlights, newFlight]
+    }));
+  };
+
+  const removeInternationalFlight = (id) => {
+    setFormData(prev => ({
+      ...prev,
+      internationalFlights: prev.internationalFlights.filter(f => f.id !== id)
+    }));
+  };
+
+  const updateInternationalFlight = (id, field, value) => {
+    setFormData(prev => ({
+      ...prev,
+      internationalFlights: prev.internationalFlights.map(flight =>
+        flight.id === id ? { ...flight, [field]: value } : flight
+      )
+    }));
+  };
+
+  // Hotels Management
+  const addHotel = () => {
+    const newHotel = {
+      id: Date.now(),
+      name: '',
+      image: '',
+      address: '',
+      phone: '',
+      checkIn: '',
+      checkOut: '',
+      roomType: '',
+      nights: '1',
+      rooms: '1',
+      guests: '1',
+      status: 'Confirmed'
+    };
+    setFormData(prev => ({
+      ...prev,
+      hotels: [...prev.hotels, newHotel]
+    }));
+  };
+
+  const removeHotel = (id) => {
+    setFormData(prev => ({
+      ...prev,
+      hotels: prev.hotels.filter(h => h.id !== id)
+    }));
+  };
+
+  const updateHotel = (id, field, value) => {
+    setFormData(prev => ({
+      ...prev,
+      hotels: prev.hotels.map(hotel =>
+        hotel.id === id ? { ...hotel, [field]: value } : hotel
+      )
+    }));
+  };
+
+  // Car Rentals Management
+  const addCarRental = () => {
+    const newCarRental = {
+      id: Date.now(),
+      carType: '',
+      carImage: '',
+      pickupDate: '',
+      returnDate: '',
+      pickupLocation: '',
+      returnLocation: '',
+      company: '',
+      status: 'Confirmed'
+    };
+    setFormData(prev => ({
+      ...prev,
+      carRentals: [...prev.carRentals, newCarRental]
+    }));
+  };
+
+  const removeCarRental = (id) => {
+    setFormData(prev => ({
+      ...prev,
+      carRentals: prev.carRentals.filter(c => c.id !== id)
+    }));
+  };
+
+  const updateCarRental = (id, field, value) => {
+    setFormData(prev => ({
+      ...prev,
+      carRentals: prev.carRentals.map(rental =>
+        rental.id === id ? { ...rental, [field]: value } : rental
+      )
+    }));
+  };
+
+  // Toggle Section
+  const toggleSection = (sectionName) => {
+    setFormData(prev => ({
+      ...prev,
+      [sectionName]: !prev[sectionName]
+    }));
+  };
+
+  // Notes Management
+  const addFlightNote = () => {
+    setFormData(prev => ({
+      ...prev,
+      flightNotes: [...prev.flightNotes, '']
+    }));
+  };
+
+  const removeFlightNote = (index) => {
+    setFormData(prev => ({
+      ...prev,
+      flightNotes: prev.flightNotes.filter((_, i) => i !== index)
+    }));
+  };
+
+  const updateFlightNote = (index, value) => {
+    setFormData(prev => ({
+      ...prev,
+      flightNotes: prev.flightNotes.map((note, i) => i === index ? value : note)
+    }));
+  };
+
+  const addHotelNote = () => {
+    setFormData(prev => ({
+      ...prev,
+      hotelNotes: [...prev.hotelNotes, '']
+    }));
+  };
+
+  const removeHotelNote = (index) => {
+    setFormData(prev => ({
+      ...prev,
+      hotelNotes: prev.hotelNotes.filter((_, i) => i !== index)
+    }));
+  };
+
+  const updateHotelNote = (index, value) => {
+    setFormData(prev => ({
+      ...prev,
+      hotelNotes: prev.hotelNotes.map((note, i) => i === index ? value : note)
+    }));
+  };
+
+  // Generate HTML
+  const generateHTML = () => {
+    // Get unique airlines for domestic flights
+    const domesticAirlines = [...new Set(formData.domesticFlights.map(f => f.airline))];
+    const domesticAirlineLogos = [...new Set(formData.domesticFlights.map(f => f.airlineLogo))];
+    
+    // Get unique airlines for international flights
+    const internationalAirlines = [...new Set(formData.internationalFlights.map(f => f.airline))];
+    const internationalAirlineLogos = [...new Set(formData.internationalFlights.map(f => f.airlineLogo))];
+
+    return `<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -97,159 +535,1138 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Tajawal', sans-serif; background-color: #f5f7fa; color: #333; line-height: 1.6; padding: 20px; }
-        .container { max-width: 800px; margin: 0 auto; background: white; padding: 40px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
-        .header { text-align: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 3px solid #6191fe; }
-        .header h1 { color: #6191fe; font-size: 32px; margin-bottom: 10px; }
-        .section { margin-bottom: 30px; }
-        .section-title { font-size: 24px; font-weight: 700; color: #6191fe; margin-bottom: 15px; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
-        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-        .info-item { background: #f8f5ff; padding: 15px; border-radius: 8px; }
-        .info-label { font-size: 14px; color: #777; margin-bottom: 5px; }
-        .info-value { font-weight: 600; color: #333; font-size: 16px; }
+        body { font-family: 'Tajawal', sans-serif; background-color: #f5f7fa; color: #333; line-height: 1.6; }
+        .poster-container { width: 720px; min-height: 1334px; margin: 0 auto; background: linear-gradient(135deg, #f8f5ff 0%, #f5f7fa 100%); position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); }
+        .bg-shape { position: absolute; border-radius: 50%; opacity: 0.1; z-index: 0; }
+        .shape-1 { width: 400px; height: 400px; background: linear-gradient(45deg, #6191fe, #8c71f3); top: -100px; left: -100px; }
+        .shape-2 { width: 300px; height: 300px; background: linear-gradient(45deg, #8c71f3, #f38981); bottom: -50px; right: -50px; }
+        .content { position: relative; z-index: 1; padding: 40px; }
+        .section { background: white; border-radius: 16px; padding: 25px; margin-bottom: 30px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); }
+        .section-title { font-size: 24px; font-weight: 700; color: #6191fe; margin-bottom: 15px; display: flex; align-items: center; }
+        .section-title .material-icons { margin-left: 10px; color: #6191fe; }
+        .guest-info { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .guest-item { display: flex; align-items: center; background: #f8f5ff; padding: 12px; border-radius: 8px; }
+        .guest-item .material-icons { margin-left: 10px; color: #8c71f3; font-size: 20px; }
+        .guest-label { font-size: 14px; color: #777; }
+        .guest-value { font-weight: 600; color: #333; }
+        .flight-card { background: #f8f5ff; border-radius: 12px; padding: 15px; margin-bottom: 15px; position: relative; overflow: hidden; }
+        .flight-card::before { content: ''; position: absolute; top: 0; left: 0; width: 6px; height: 100%; background: linear-gradient(to bottom, #6191fe, #8c71f3, #f38981); }
+        .flight-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .flight-airline { font-weight: 600; color: #8c71f3; }
+        .flight-number { font-weight: 600; color: #6191fe; }
+        .flight-route { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .airport-info { text-align: center; width: 30%; }
+        .airport-code { font-size: 20px; font-weight: 700; color: #6191fe; }
+        .airport-name { font-size: 14px; color: #555; }
+        .airport-time { font-size: 16px; font-weight: 600; color: #333; }
+        .airport-date { font-size: 14px; color: #777; }
+        .flight-path { display: flex; flex-direction: column; align-items: center; width: 40%; }
+        .flight-duration { font-size: 14px; color: #555; margin-top: 5px; }
+        .flight-details { display: flex; justify-content: space-between; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #ddd; }
+        .detail-item { display: flex; align-items: center; }
+        .detail-item .material-icons { font-size: 18px; margin-left: 5px; color: #8c71f3; }
+        .layover { background-color: rgba(140, 113, 243, 0.1); border-radius: 8px; padding: 10px; margin: 10px 0; text-align: center; font-size: 14px; color: #555; }
+        .hotel-card { background: #f8f5ff; border-radius: 12px; padding: 15px; margin-bottom: 15px; position: relative; overflow: hidden; }
+        .hotel-card::before { content: ''; position: absolute; top: 0; left: 0; width: 6px; height: 100%; background: linear-gradient(to bottom, #6191fe, #8c71f3, #f38981); }
+        .hotel-name { font-size: 20px; font-weight: 700; color: #6191fe; margin-bottom: 15px; }
+        .hotel-details { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        .hotel-image { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; }
+        .room-details { background-color: rgba(140, 113, 243, 0.05); border-radius: 8px; padding: 15px; margin-top: 15px; }
+        .room-title { font-weight: 600; color: #6191fe; margin-bottom: 10px; display: flex; align-items: center; }
+        .room-title .material-icons { margin-left: 8px; color: #8c71f3; }
+        .confirmation-badge { display: inline-block; background-color: #4CAF50; color: white; padding: 5px 15px; border-radius: 20px; font-weight: 600; font-size: 14px; }
+        .section-divider { display: flex; justify-content: center; margin: 30px 0; }
+        .section-divider img { height: 60px; opacity: 0.8; }
+        .notes-section { margin-top: 15px; }
+        .notes-category { margin-bottom: 15px; }
+        .notes-category-title { font-size: 18px; font-weight: 600; color: #6191fe; margin-bottom: 10px; display: flex; align-items: center; }
+        .notes-category-title .material-icons { margin-left: 8px; font-size: 20px; }
+        .notes-list { list-style: none; padding-right: 15px; }
+        .notes-list li { margin-bottom: 8px; padding-right: 20px; position: relative; font-size: 14px; }
+        .notes-list li:before { content: "•"; position: absolute; right: 0; color: #8c71f3; }
+        .brand-section { display: flex; align-items: center; justify-content: center; margin-bottom: 30px; background: white; border-radius: 16px; padding: 20px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); }
+        .brand-logo { height: 80px; margin-left: 20px; }
+        .brand-name { font-size: 28px; font-weight: 700; color: #6191fe; margin-bottom: 5px; }
+        .brand-tagline { font-size: 18px; color: #f38981; }
+        .grid-texture { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px); background-size: 20px 20px; z-index: 0; }
+        .footer { text-align: center; margin-top: 30px; padding: 20px; font-size: 14px; color: #666; }
+        .contact-info { display: flex; justify-content: center; gap: 30px; margin-top: 10px; }
+        .contact-item { display: flex; align-items: center; }
+        .contact-item .material-icons { margin-left: 5px; color: #8c71f3; }
+        .airline-logo-container { display: flex; justify-content: center; margin-bottom: 20px; }
+        .airline-logo { height: 80px; object-fit: contain; }
+        .airline-name { font-size: 22px; font-weight: 700; color: #6191fe; text-align: center; margin-bottom: 15px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>تأكيد الحجز | Booking Confirmation</h1>
-            <p style="color: #666;">شركة اطلالة للسفر والسياحة</p>
-        </div>
+    <div class="poster-container">
+        <div class="bg-shape shape-1"></div>
+        <div class="bg-shape shape-2"></div>
+        <div class="grid-texture"></div>
         
-        ${formData.guestInfoEnabled ? `
-        <div class="section">
-            <h2 class="section-title">معلومات الضيف | Guest Information</h2>
-            <div class="info-grid">
-                <div class="info-item">
-                    <div class="info-label">اسم الضيف | Guest Name</div>
-                    <div class="info-value">${formData.guestName}</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">الجنسية | Nationality</div>
-                    <div class="info-value">${formData.nationality}</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">رقم التذكرة | Ticket Number</div>
-                    <div class="info-value">${formData.ticketNumber}</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">رقم الحجز | Booking ID</div>
-                    <div class="info-value">${formData.bookingId}</div>
+        <div class="content">
+            <!-- Brand Section -->
+            <div class="brand-section">
+                <img src="https://z-cdn-media.chatglm.cn/files/25b78501-45f1-426e-ad8f-20b0a946a70e_pasted_image_1759241618713.png?auth_key=1790777630-7dfed01e625a42d2925124a4eed16209-0-c43c12c0cf0a7986d35ede5c427fb543" alt="Etlaala Travel & Tourism" class="brand-logo">
+                <div>
+                    <div class="brand-name">اطلالة للسفر والسياحة</div>
+                    <div class="brand-tagline">Travel & Tourism</div>
                 </div>
             </div>
-        </div>
-        ` : ''}
-        
-        ${formData.importantNotesEnabled && formData.flightNotes.length > 0 ? `
-        <div class="section">
-            <h2 class="section-title">معلومات هامة | Important Information</h2>
-            <ul style="list-style: none; padding-right: 20px;">
-                ${formData.flightNotes.map(note => `<li style="margin-bottom: 10px; padding-right: 20px; position: relative;">
-                    <span style="position: absolute; right: 0; color: #6191fe;">•</span>
-                    ${note}
-                </li>`).join('')}
-            </ul>
-        </div>
-        ` : ''}
-        
-        <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 2px solid #e5e7eb; color: #666;">
-            <p>شركة اطلالة للسفر والسياحة | ETLAA'A TRAVEL & TOURISM</p>
-            <p style="font-size: 14px; margin-top: 10px;">920029967 | ops1@etlaala.com</p>
-        </div>
-    </div>
-</body>
-</html>`;
-            };
-
-            const downloadHTML = () => {
-                const htmlContent = generateHTML();
-                const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
-                const url = URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = `تأكيد-حجز-${formData.guestName}.html`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                URL.revokeObjectURL(url);
-            };
-
-            return (
-                <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50" style={{ fontFamily: 'Tajawal, sans-serif' }}>
-                    <div className="max-w-7xl mx-auto p-6">
-                        <div className="bg-white rounded-2xl shadow-xl p-8 mb-6">
-                            <div className="flex items-center justify-between mb-8">
+            
+            ${formData.guestInfoEnabled ? `
+            <!-- Guest Information Section -->
+            <div class="section">
+                <h3 class="section-title">
+                    <i class="material-icons">person</i>
+                    معلومات الضيف | Guest Information
+                </h3>
+                
+                <div class="guest-info">
+                    <div class="guest-item">
+                        <i class="material-icons">badge</i>
+                        <div>
+                            <div class="guest-label">اسم الضيف | Guest Name</div>
+                            <div class="guest-value">${formData.guestName}</div>
+                        </div>
+                    </div>
+                    <div class="guest-item">
+                        <i class="material-icons">public</i>
+                        <div>
+                            <div class="guest-label">الجنسية | Nationality</div>
+                            <div class="guest-value">${formData.nationality}</div>
+                        </div>
+                    </div>
+                    <div class="guest-item">
+                        <i class="material-icons">confirmation_number</i>
+                        <div>
+                            <div class="guest-label">رقم التذكرة | Ticket Number</div>
+                            <div class="guest-value">${formData.ticketNumber}</div>
+                        </div>
+                    </div>
+                    <div class="guest-item">
+                        <i class="material-icons">book</i>
+                        <div>
+                            <div class="guest-label">رقم الحجز | Booking ID</div>
+                            <div class="guest-value">${formData.bookingId}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            ` : ''}
+            
+            ${(formData.guestInfoEnabled || formData.domesticFlightsEnabled) ? `
+            <!-- Section Divider -->
+            <div class="section-divider">
+                <img src="https://z-cdn-media.chatglm.cn/files/3f0b9cd4-570e-4ebd-8aff-d14b29404d65_pasted_image_1759242842896.png?auth_key=1790778881-ff8d15077da24bdaa583c77bdfed7461-0-a6a4b77eb709f2fa9cfa5d2fb50cc028" alt="Section Divider">
+            </div>
+            ` : ''}
+            
+            ${formData.domesticFlightsEnabled && formData.domesticFlights.length > 0 ? `
+            <!-- Domestic Flight Information Section -->
+            <div class="section">
+                <h3 class="section-title">
+                    <i class="material-icons">flight</i>
+                    معلومات الطيران الداخلي | Domestic Flight
+                </h3>
+                
+                ${domesticAirlineLogos[0] ? `
+                <div class="airline-logo-container">
+                    <img src="${domesticAirlineLogos[0]}" alt="${domesticAirlines[0]}" class="airline-logo">
+                </div>
+                <div class="airline-name">${domesticAirlines[0]}</div>
+                ` : ''}
+                
+                ${formData.domesticFlights.map(flight => `
+                <div class="flight-card">
+                    <div class="flight-header">
+                        <div class="flight-airline">${flight.airline}</div>
+                        <div class="flight-number">${flight.flightNumber}</div>
+                    </div>
+                    
+                    <div class="flight-route">
+                        <div class="airport-info">
+                            <div class="airport-code">${flight.departureAirport}</div>
+                            <div class="airport-name">${flight.departureAirportName}</div>
+                            <div class="airport-time">${flight.departureTime}</div>
+                            <div class="airport-date">${flight.departureDate}</div>
+                        </div>
+                        
+                        <div class="flight-path">
+                            <i class="material-icons" style="font-size: 30px; color: #8c71f3;">flight</i>
+                            <div class="flight-duration">${flight.duration}</div>
+                        </div>
+                        
+                        <div class="airport-info">
+                            <div class="airport-code">${flight.arrivalAirport}</div>
+                            <div class="airport-name">${flight.arrivalAirportName}</div>
+                            <div class="airport-time">${flight.arrivalTime}</div>
+                            <div class="airport-date">${flight.arrivalDate}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="flight-details">
+                        <div class="detail-item">
+                            <i class="material-icons">luggage</i>
+                            <div>Cabin: ${flight.cabinBaggage}</div>
+                        </div>
+                        <div class="detail-item">
+                            <i class="material-icons">card_travel</i>
+                            <div>Additional: ${flight.checkedBaggage}</div>
+                        </div>
+                        <div class="detail-item">
+                            <i class="material-icons">verified</i>
+                            <div class="confirmation-badge">${flight.status}</div>
+                        </div>
+                    </div>
+                </div>
+                `).join('')}
+            </div>
+            
+            <!-- Section Divider -->
+            <div class="section-divider">
+                <img src="https://z-cdn-media.chatglm.cn/files/3f0b9cd4-570e-4ebd-8aff-d14b29404d65_pasted_image_1759242842896.png?auth_key=1790778881-ff8d15077da24bdaa583c77bdfed7461-0-a6a4b77eb709f2fa9cfa5d2fb50cc028" alt="Section Divider">
+            </div>
+            ` : ''}
+            
+            ${formData.internationalFlights.length > 0 ? `
+            <!-- International Flight Information Section -->
+            <div class="section">
+                <h3 class="section-title">
+                    <i class="material-icons">flight</i>
+                    معلومات الطيران الدولي | International Flight
+                </h3>
+                
+                ${internationalAirlineLogos[0] ? `
+                <div class="airline-logo-container">
+                    <img src="${internationalAirlineLogos[0]}" alt="${internationalAirlines[0]}" class="airline-logo">
+                </div>
+                <div class="airline-name">${internationalAirlines[0]}</div>
+                ` : ''}
+                
+                ${formData.internationalFlights.map((flight, index) => `
+                ${flight.layover && index > 0 ? `
+                <div class="layover">
+                    <i class="material-icons" style="vertical-align: middle; margin-left: 5px;">schedule</i>
+                    توقف مؤقت | Layover: ${flight.layover}
+                </div>
+                ` : ''}
+                
+                <div class="flight-card">
+                    <div class="flight-header">
+                        <div class="flight-airline">${flight.airline}</div>
+                        <div class="flight-number">${flight.flightNumber}</div>
+                    </div>
+                    
+                    <div class="flight-route">
+                        <div class="airport-info">
+                            <div class="airport-code">${flight.departureAirport}</div>
+                            <div class="airport-name">${flight.departureAirportName}</div>
+                            <div class="airport-time">${flight.departureTime}</div>
+                            <div class="airport-date">${flight.departureDate}</div>
+                            ${flight.departureTerminal ? `<div style="font-size: 12px; color: #777;">${flight.departureTerminal}</div>` : ''}
+                        </div>
+                        
+                        <div class="flight-path">
+                            <i class="material-icons" style="font-size: 30px; color: #8c71f3;">flight</i>
+                            <div class="flight-duration">${flight.duration}</div>
+                        </div>
+                        
+                        <div class="airport-info">
+                            <div class="airport-code">${flight.arrivalAirport}</div>
+                            <div class="airport-name">${flight.arrivalAirportName}</div>
+                            <div class="airport-time">${flight.arrivalTime}</div>
+                            <div class="airport-date">${flight.arrivalDate}</div>
+                            ${flight.arrivalTerminal ? `<div style="font-size: 12px; color: #777;">${flight.arrivalTerminal}</div>` : ''}
+                        </div>
+                    </div>
+                    
+                    <div class="flight-details">
+                        <div class="detail-item">
+                            <i class="material-icons">luggage</i>
+                            <div>Cabin: ${flight.cabinBaggage}</div>
+                        </div>
+                        <div class="detail-item">
+                            <i class="material-icons">card_travel</i>
+                            <div>Check-in: ${flight.checkedBaggage}</div>
+                        </div>
+                        <div class="detail-item">
+                            <i class="material-icons">verified</i>
+                            <div class="confirmation-badge">${flight.status}</div>
+                        </div>
+                    </div>
+                </div>
+                `).join('')}
+            </div>
+            
+            <!-- Section Divider -->
+            <div class="section-divider">
+                <img src="https://z-cdn-media.chatglm.cn/files/3f0b9cd4-570e-4ebd-8aff-d14b29404d65_pasted_image_1759242842896.png?auth_key=1790778881-ff8d15077da24bdaa583c77bdfed7461-0-a6a4b77eb709f2fa9cfa5d2fb50cc028" alt="Section Divider">
+            </div>
+            ` : ''}
+            
+            ${formData.hotels.length > 0 ? `
+            <!-- Hotel Booking Section -->
+            <div class="section">
+                <h3 class="section-title">
+                    <i class="material-icons">hotel</i>
+                    حجز الفنادق | Hotel Booking
+                </h3>
+                
+                ${formData.hotels.map(hotel => `
+                <div class="hotel-card">
+                    <div class="hotel-name">${hotel.name}</div>
+                    
+                    ${hotel.image ? `<img src="${hotel.image}" alt="${hotel.name}" class="hotel-image">` : ''}
+                    
+                    <div class="hotel-details">
+                        <div class="detail-item">
+                            <i class="material-icons">location_on</i>
+                            <div>
+                                <div class="guest-label">العنوان | Address</div>
+                                <div class="guest-value">${hotel.address}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="material-icons">phone</i>
+                            <div>
+                                <div class="guest-label">الهاتف | Phone</div>
+                                <div class="guest-value">${hotel.phone}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="material-icons">event</i>
+                            <div>
+                                <div class="guest-label">تاريخ الوصول | Check-in</div>
+                                <div class="guest-value">${hotel.checkIn}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="material-icons">event_available</i>
+                            <div>
+                                <div class="guest-label">تاريخ المغادرة | Check-out</div>
+                                <div class="guest-value">${hotel.checkOut}</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="room-details">
+                        <div class="room-title">
+                            <i class="material-icons">hotel</i>
+                            تفاصيل الغرفة | Room Details
+                        </div>
+                        
+                        <div class="hotel-details">
+                            <div class="detail-item">
+                                <i class="material-icons">meeting_room</i>
                                 <div>
-                                    <h1 className="text-3xl font-bold text-blue-600 mb-2">تأكيدات عملاء شركة اطلالة</h1>
-                                    <p className="text-gray-600">شركة اطلالة للسفر والسياحة</p>
+                                    <div class="guest-label">نوع الغرفة | Room Type</div>
+                                    <div class="guest-value">${hotel.roomType}</div>
                                 </div>
-                                <button
-                                    onClick={downloadHTML}
-                                    className="flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl text-lg font-bold"
-                                >
-                                    <Download />
-                                    تحميل التأكيد
-                                </button>
                             </div>
                             
-                            <div className="bg-blue-50 p-6 rounded-lg">
-                                <h3 className="text-xl font-bold text-blue-700 mb-4">المعلومات الأساسية</h3>
-                                <div className="grid grid-cols-2 gap-6">
-                                    <div>
-                                        <label className="block text-sm font-semibold text-gray-700 mb-2">اسم الضيف | Guest Name</label>
-                                        <input 
-                                            type="text" 
-                                            value={formData.guestName} 
-                                            onChange={(e) => updateField('guestName', e.target.value)} 
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg" 
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-semibold text-gray-700 mb-2">الجنسية | Nationality</label>
-                                        <input 
-                                            type="text" 
-                                            value={formData.nationality} 
-                                            onChange={(e) => updateField('nationality', e.target.value)} 
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg" 
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-semibold text-gray-700 mb-2">رقم التذكرة | Ticket Number</label>
-                                        <input 
-                                            type="text" 
-                                            value={formData.ticketNumber} 
-                                            onChange={(e) => updateField('ticketNumber', e.target.value)} 
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg" 
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-semibold text-gray-700 mb-2">رقم الحجز | Booking ID</label>
-                                        <input 
-                                            type="text" 
-                                            value={formData.bookingId} 
-                                            onChange={(e) => updateField('bookingId', e.target.value)} 
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg" 
-                                        />
-                                    </div>
+                            <div class="detail-item">
+                                <i class="material-icons">night_shelter</i>
+                                <div>
+                                    <div class="guest-label">عدد الليالي | Nights</div>
+                                    <div class="guest-value">${hotel.nights}</div>
+                                </div>
+                            </div>
+                            
+                            <div class="detail-item">
+                                <i class="material-icons">door_front</i>
+                                <div>
+                                    <div class="guest-label">عدد الغرف | Rooms</div>
+                                    <div class="guest-value">${hotel.rooms}</div>
+                                </div>
+                            </div>
+                            
+                            <div class="detail-item">
+                                <i class="material-icons">people</i>
+                                <div>
+                                    <div class="guest-label">الضيوف | Guests</div>
+                                    <div class="guest-value">${hotel.guests}</div>
                                 </div>
                             </div>
                         </div>
                         
-                        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-                            <h3 className="font-bold text-blue-800 mb-3">💡 كيفية استخدام البرنامج:</h3>
-                            <ol className="list-decimal list-inside space-y-2 text-blue-900 mr-4">
-                                <li>املأ معلومات الضيف في النموذج أعلاه</li>
-                                <li>اضغط على زر "تحميل التأكيد" للحصول على الملف</li>
-                                <li>افتح الملف في أي متصفح للمعاينة</li>
-                                <li>للحفظ كـ PDF: اضغط Ctrl+P واختر "Save as PDF"</li>
-                            </ol>
+                        <div style="text-align: center; margin-top: 15px;">
+                            <div class="confirmation-badge">تم التأكيد | ${hotel.status}</div>
                         </div>
                     </div>
                 </div>
-            );
-        }
+                `).join('')}
+            </div>
+            
+            <!-- Section Divider -->
+            <div class="section-divider">
+                <img src="https://z-cdn-media.chatglm.cn/files/3f0b9cd4-570e-4ebd-8aff-d14b29404d65_pasted_image_1759242842896.png?auth_key=1790778881-ff8d15077da24bdaa583c77bdfed7461-0-a6a4b77eb709f2fa9cfa5d2fb50cc028" alt="Section Divider">
+            </div>
+            ` : ''}
+            
+            ${formData.carRentalEnabled && formData.carRentals.length > 0 ? `
+            <!-- Car Rental Section -->
+            <div class="section">
+                <h3 class="section-title">
+                    <i class="material-icons">directions_car</i>
+                    استئجار السيارات | Car Rental
+                </h3>
+                
+                ${formData.carRentals.map(rental => `
+                <div class="hotel-card">
+                    <div class="hotel-name">${rental.carType}</div>
+                    
+                    ${rental.carImage ? `<img src="${rental.carImage}" alt="${rental.carType}" class="hotel-image">` : ''}
+                    
+                    <div class="hotel-details">
+                        <div class="detail-item">
+                            <i class="material-icons">business</i>
+                            <div>
+                                <div class="guest-label">الشركة | Company</div>
+                                <div class="guest-value">${rental.company}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="material-icons">event</i>
+                            <div>
+                                <div class="guest-label">تاريخ الاستلام | Pick-up Date</div>
+                                <div class="guest-value">${rental.pickupDate}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="material-icons">event_available</i>
+                            <div>
+                                <div class="guest-label">تاريخ التسليم | Return Date</div>
+                                <div class="guest-value">${rental.returnDate}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="material-icons">location_on</i>
+                            <div>
+                                <div class="guest-label">مكان الاستلام | Pick-up Location</div>
+                                <div class="guest-value">${rental.pickupLocation}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="material-icons">place</i>
+                            <div>
+                                <div class="guest-label">مكان التسليم | Return Location</div>
+                                <div class="guest-value">${rental.returnLocation}</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 15px;">
+                        <div class="confirmation-badge">تم التأكيد | ${rental.status}</div>
+                    </div>
+                </div>
+                `).join('')}
+            </div>
+            
+            <!-- Section Divider -->
+            <div class="section-divider">
+                <img src="https://z-cdn-media.chatglm.cn/files/3f0b9cd4-570e-4ebd-8aff-d14b29404d65_pasted_image_1759242842896.png?auth_key=1790778881-ff8d15077da24bdaa583c77bdfed7461-0-a6a4b77eb709f2fa9cfa5d2fb50cc028" alt="Section Divider">
+            </div>
+            ` : ''}
+            
+            ${formData.importantNotesEnabled && (formData.flightNotes.length > 0 || formData.hotelNotes.length > 0) ? `
+            <!-- Important Information Section -->
+            <div class="section">
+                <h3 class="section-title">
+                    <i class="material-icons">info</i>
+                    معلومات هامة | Important Information
+                </h3>
+                
+                <div class="notes-section">
+                    ${formData.flightNotes.length > 0 ? `
+                    <div class="notes-category">
+                        <div class="notes-category-title">
+                            <i class="material-icons">flight</i>
+                            معلومات الطيران | Flight Information
+                        </div>
+                        <ul class="notes-list">
+                            ${formData.flightNotes.map(note => `<li>${note}</li>`).join('')}
+                        </ul>
+                    </div>
+                    ` : ''}
+                    
+                    ${formData.hotelNotes.length > 0 ? `
+                    <div class="notes-category">
+                        <div class="notes-category-title">
+                            <i class="material-icons">hotel</i>
+                            معلومات الفنادق | Hotel Information
+                        </div>
+                        <ul class="notes-list">
+                            ${formData.hotelNotes.map(note => `<li>${note}</li>`).join('')}
+                        </ul>
+                    </div>
+                    ` : ''}
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="footer">
+                <div class="company-info">
+                    <div>
+                        <h3 style="font-weight: 600; font-size: 18px; margin-bottom: 5px;">اطلالة للسفر والسياحة | ETLAA'A TRAVEL & TOURISM</h3>
+                        <div style="font-size: 14px; margin-bottom: 5px;">3251 Aban Bn Saed Radia Allah Aneh Batha Quraish, Makkah, Saudi Arabia</div>
+                    </div>
+                </div>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="material-icons">language</i>
+                        etlaala.com
+                    </div>
+                    <div class="contact-item">
+                        <i class="material-icons">phone</i>
+                        920029967
+                    </div>
+                    <div class="contact-item">
+                        <i class="material-icons">email</i>
+                        ops1@etlaala.com
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>`;
+  };
 
-        ReactDOM.render(<BookingConfirmationGenerator />, document.getElementById('root'));
+  const downloadHTML = () => {
+    const htmlContent = generateHTML();
+    const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `تأكيد-حجز-${formData.guestName}.html`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50" style={{ fontFamily: 'Tajawal, sans-serif' }} dir="rtl">
+      <div className="max-w-7xl mx-auto p-6">
+        <div className="bg-white rounded-2xl shadow-xl p-8 mb-6">
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h1 className="text-3xl font-bold text-blue-600 mb-2">تأكيدات عملاء شركة اطلالة</h1>
+              <p className="text-gray-600">شركة اطلالة للسفر والسياحة</p>
+            </div>
+            <button
+              onClick={downloadHTML}
+              className="flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl text-lg font-bold"
+            >
+              <Download size={24} />
+              تحميل التأكيد
+            </button>
+          </div>
+
+          {/* Tabs */}
+          <div className="flex gap-2 mb-6 border-b overflow-x-auto">
+            {[
+              { id: 'guest', icon: User, label: 'معلومات الضيف' },
+              { id: 'domestic', icon: Plane, label: 'الطيران الداخلي' },
+              { id: 'international', icon: Plane, label: 'الطيران الدولي' },
+              { id: 'hotels', icon: Hotel, label: 'الفنادق' },
+              { id: 'carrental', icon: Car, label: 'استئجار السيارات' },
+              { id: 'notes', icon: Info, label: 'معلومات هامة' }
+            ].map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`px-6 py-3 font-semibold whitespace-nowrap ${
+                  activeTab === tab.id ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500'
+                }`}
+              >
+                <tab.icon className="inline ml-2" size={18} />
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Tab: Guest Information */}
+          {activeTab === 'guest' && (
+            <div className="space-y-6">
+              {/* Toggle Section */}
+              <div className="bg-gradient-to-r from-purple-50 to-blue-50 p-6 rounded-xl border-4 border-purple-300 shadow-lg">
+                <div className="flex items-center justify-between gap-8">
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-purple-700 mb-3">👤 تفعيل قسم معلومات الضيف</h3>
+                    <p className="text-gray-700 text-base font-medium">فعّل هذا الخيار لإظهار معلومات الضيف في التأكيد النهائي</p>
+                  </div>
+                  
+                  <div className="flex flex-col items-center gap-3">
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input type="checkbox" checked={formData.guestInfoEnabled} onChange={() => toggleSection('guestInfoEnabled')} className="sr-only peer" />
+                      <div className="w-20 h-10 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:right-[6px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-8 after:w-8 after:transition-all peer-checked:bg-purple-600 shadow-lg"></div>
+                    </label>
+                    <span className={`text-sm font-bold px-4 py-1 rounded-full ${formData.guestInfoEnabled ? 'bg-purple-600 text-white' : 'bg-gray-300 text-gray-800'}`}>
+                      {formData.guestInfoEnabled ? '✓ مفعّل' : '✗ غير مفعّل'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {formData.guestInfoEnabled && (
+              <div className="bg-blue-50 p-6 rounded-lg">
+                <h3 className="text-xl font-bold text-blue-700 mb-4">المعلومات الأساسية</h3>
+                <div className="grid grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">اسم الضيف | Guest Name</label>
+                    <input type="text" value={formData.guestName} onChange={(e) => updateField('guestName', e.target.value)} className="w-full px-4 py-3 border border-gray-300 rounded-lg" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">الجنسية | Nationality</label>
+                    <input type="text" value={formData.nationality} onChange={(e) => updateField('nationality', e.target.value)} className="w-full px-4 py-3 border border-gray-300 rounded-lg" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">رقم التذكرة | Ticket Number</label>
+                    <input type="text" value={formData.ticketNumber} onChange={(e) => updateField('ticketNumber', e.target.value)} className="w-full px-4 py-3 border border-gray-300 rounded-lg" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">رقم الحجز | Booking ID</label>
+                    <input type="text" value={formData.bookingId} onChange={(e) => updateField('bookingId', e.target.value)} className="w-full px-4 py-3 border border-gray-300 rounded-lg" />
+                  </div>
+                </div>
+              </div>
+              )}
+            </div>
+          )}
+
+          {/* Tab: Domestic Flights */}
+          {activeTab === 'domestic' && (
+            <div className="space-y-6">
+              {/* Toggle Section */}
+              <div className="bg-gradient-to-r from-blue-50 to-cyan-50 p-6 rounded-xl border-4 border-blue-300 shadow-lg">
+                <div className="flex items-center justify-between gap-8">
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-blue-700 mb-3">✈️ تفعيل قسم الطيران الداخلي</h3>
+                    <p className="text-gray-700 text-base font-medium">فعّل هذا الخيار لإظهار رحلات الطيران الداخلي في التأكيد النهائي</p>
+                  </div>
+                  
+                  <div className="flex flex-col items-center gap-3">
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input type="checkbox" checked={formData.domesticFlightsEnabled} onChange={() => toggleSection('domesticFlightsEnabled')} className="sr-only peer" />
+                      <div className="w-20 h-10 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:right-[6px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-8 after:w-8 after:transition-all peer-checked:bg-blue-600 shadow-lg"></div>
+                    </label>
+                    <span className={`text-sm font-bold px-4 py-1 rounded-full ${formData.domesticFlightsEnabled ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-800'}`}>
+                      {formData.domesticFlightsEnabled ? '✓ مفعّل' : '✗ غير مفعّل'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {formData.domesticFlightsEnabled && (
+              <>
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-2xl font-bold text-blue-600">✈️ رحلات الطيران الداخلي</h3>
+                <button onClick={addDomesticFlight} className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                  <Plus size={18} />
+                  إضافة رحلة
+                </button>
+              </div>
+
+              {formData.domesticFlights.map((flight, index) => (
+                <div key={flight.id} className="bg-blue-50 p-6 rounded-lg relative">
+                  <button onClick={() => removeDomesticFlight(flight.id)} className="absolute top-4 left-4 text-red-600 hover:text-red-800">
+                    <Trash2 size={20} />
+                  </button>
+                  
+                  <h4 className="text-lg font-bold text-blue-600 mb-4">رحلة {index + 1}</h4>
+                  
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">شركة الطيران</label>
+                      <input type="text" value={flight.airline} onChange={(e) => updateDomesticFlight(flight.id, 'airline', e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">شعار الشركة (رابط)</label>
+                      <input type="text" value={flight.airlineLogo} onChange={(e) => updateDomesticFlight(flight.id, 'airlineLogo', e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">رقم الرحلة</label>
+                      <input type="text" value={flight.flightNumber} onChange={(e) => updateDomesticFlight(flight.id, 'flightNumber', e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">المدة</label>
+                      <input type="text" value={flight.duration} onChange={(e) => updateDomesticFlight(flight.id, 'duration', e.target.value)} placeholder="1 hr 40 min" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">مطار الإقلاع (رمز)</label>
+                      <input type="text" value={flight.departureAirport} onChange={(e) => updateDomesticFlight(flight.id, 'departureAirport', e.target.value)} placeholder="BKK" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">اسم مطار الإقلاع</label>
+                      <input type="text" value={flight.departureAirportName} onChange={(e) => updateDomesticFlight(flight.id, 'departureAirportName', e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">وقت الإقلاع</label>
+                      <input type="text" value={flight.departureTime} onChange={(e) => updateDomesticFlight(flight.id, 'departureTime', e.target.value)} placeholder="12:05" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">تاريخ الإقلاع</label>
+                      <input type="text" value={flight.departureDate} onChange={(e) => updateDomesticFlight(flight.id, 'departureDate', e.target.value)} placeholder="10 Jan 2026" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">مطار الوصول (رمز)</label>
+                      <input type="text" value={flight.arrivalAirport} onChange={(e) => updateDomesticFlight(flight.id, 'arrivalAirport', e.target.value)} placeholder="HKT" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">اسم مطار الوصول</label>
+                      <input type="text" value={flight.arrivalAirportName} onChange={(e) => updateDomesticFlight(flight.id, 'arrivalAirportName', e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">وقت الوصول</label>
+                      <input type="text" value={flight.arrivalTime} onChange={(e) => updateDomesticFlight(flight.id, 'arrivalTime', e.target.value)} placeholder="13:45" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">تاريخ الوصول</label>
+                      <input type="text" value={flight.arrivalDate} onChange={(e) => updateDomesticFlight(flight.id, 'arrivalDate', e.target.value)} placeholder="10 Jan 2026" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">حقيبة اليد</label>
+                      <input type="text" value={flight.cabinBaggage} onChange={(e) => updateDomesticFlight(flight.id, 'cabinBaggage', e.target.value)} placeholder="7Kg" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">الحقيبة المسجلة</label>
+                      <input type="text" value={flight.checkedBaggage} onChange={(e) => updateDomesticFlight(flight.id, 'checkedBaggage', e.target.value)} placeholder="20KG" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">الحالة</label>
+                      <input type="text" value={flight.status} onChange={(e) => updateDomesticFlight(flight.id, 'status', e.target.value)} placeholder="Confirmed" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+              </>
+              )}
+            </div>
+          )}
+
+          {/* Tab: International Flights */}
+          {activeTab === 'international' && (
+            <div className="space-y-6">
+              {/* Toggle Section */}
+              <div className="bg-gradient-to-r from-indigo-50 to-purple-50 p-6 rounded-xl border-4 border-indigo-300 shadow-lg">
+                <div className="flex items-center justify-between gap-8">
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-indigo-700 mb-3">🌍 تفعيل قسم الطيران الدولي</h3>
+                    <p className="text-gray-700 text-base font-medium">فعّل هذا الخيار لإظهار رحلات الطيران الدولي في التأكيد النهائي</p>
+                  </div>
+                  
+                  <div className="flex flex-col items-center gap-3">
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input type="checkbox" checked={formData.internationalFlightsEnabled} onChange={() => toggleSection('internationalFlightsEnabled')} className="sr-only peer" />
+                      <div className="w-20 h-10 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:right-[6px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-8 after:w-8 after:transition-all peer-checked:bg-indigo-600 shadow-lg"></div>
+                    </label>
+                    <span className={`text-sm font-bold px-4 py-1 rounded-full ${formData.internationalFlightsEnabled ? 'bg-indigo-600 text-white' : 'bg-gray-300 text-gray-800'}`}>
+                      {formData.internationalFlightsEnabled ? '✓ مفعّل' : '✗ غير مفعّل'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {formData.internationalFlightsEnabled && (
+              <>
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-2xl font-bold text-purple-600">✈️ رحلات الطيران الدولي</h3>
+                <button onClick={addInternationalFlight} className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
+                  <Plus size={18} />
+                  إضافة رحلة
+                </button>
+              </div>
+
+              {formData.internationalFlights.map((flight, index) => (
+                <div key={flight.id} className="bg-purple-50 p-6 rounded-lg relative">
+                  <button onClick={() => removeInternationalFlight(flight.id)} className="absolute top-4 left-4 text-red-600 hover:text-red-800">
+                    <Trash2 size={20} />
+                  </button>
+                  
+                  <h4 className="text-lg font-bold text-purple-600 mb-4">رحلة {index + 1}</h4>
+                  
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">شركة الطيران</label>
+                      <input type="text" value={flight.airline} onChange={(e) => updateInternationalFlight(flight.id, 'airline', e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">شعار الشركة (رابط)</label>
+                      <input type="text" value={flight.airlineLogo} onChange={(e) => updateInternationalFlight(flight.id, 'airlineLogo', e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">رقم الرحلة</label>
+                      <input type="text" value={flight.flightNumber} onChange={(e) => updateInternationalFlight(flight.id, 'flightNumber', e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">المدة</label>
+                      <input type="text" value={flight.duration} onChange={(e) => updateInternationalFlight(flight.id, 'duration', e.target.value)} placeholder="2 hr 45 min" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">مطار الإقلاع (رمز)</label>
+                      <input type="text" value={flight.departureAirport} onChange={(e) => updateInternationalFlight(flight.id, 'departureAirport', e.target.value)} placeholder="RUH" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">اسم مطار الإقلاع</label>
+                      <input type="text" value={flight.departureAirportName} onChange={(e) => updateInternationalFlight(flight.id, 'departureAirportName', e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">صالة الإقلاع</label>
+                      <input type="text" value={flight.departureTerminal} onChange={(e) => updateInternationalFlight(flight.id, 'departureTerminal', e.target.value)} placeholder="Terminal 3" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">وقت الإقلاع</label>
+                      <input type="text" value={flight.departureTime} onChange={(e) => updateInternationalFlight(flight.id, 'departureTime', e.target.value)} placeholder="10:30" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">تاريخ الإقلاع</label>
+                      <input type="text" value={flight.departureDate} onChange={(e) => updateInternationalFlight(flight.id, 'departureDate', e.target.value)} placeholder="09 Jan 2026" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">مطار الوصول (رمز)</label>
+                      <input type="text" value={flight.arrivalAirport} onChange={(e) => updateInternationalFlight(flight.id, 'arrivalAirport', e.target.value)} placeholder="AUH" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">اسم مطار الوصول</label>
+                      <input type="text" value={flight.arrivalAirportName} onChange={(e) => updateInternationalFlight(flight.id, 'arrivalAirportName', e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">صالة الوصول</label>
+                      <input type="text" value={flight.arrivalTerminal} onChange={(e) => updateInternationalFlight(flight.id, 'arrivalTerminal', e.target.value)} placeholder="Terminal A" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">وقت الوصول</label>
+                      <input type="text" value={flight.arrivalTime} onChange={(e) => updateInternationalFlight(flight.id, 'arrivalTime', e.target.value)} placeholder="13:15" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">تاريخ الوصول</label>
+                      <input type="text" value={flight.arrivalDate} onChange={(e) => updateInternationalFlight(flight.id, 'arrivalDate', e.target.value)} placeholder="09 Jan 2026" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">توقف مؤقت (Layover)</label>
+                      <input type="text" value={flight.layover} onChange={(e) => updateInternationalFlight(flight.id, 'layover', e.target.value)} placeholder="1 hr 0 min at Abu Dhabi Intl" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">حقيبة اليد</label>
+                      <input type="text" value={flight.cabinBaggage} onChange={(e) => updateInternationalFlight(flight.id, 'cabinBaggage', e.target.value)} placeholder="7Kg" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">الحقيبة المسجلة</label>
+                      <input type="text" value={flight.checkedBaggage} onChange={(e) => updateInternationalFlight(flight.id, 'checkedBaggage', e.target.value)} placeholder="25KG" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">الحالة</label>
+                      <input type="text" value={flight.status} onChange={(e) => updateInternationalFlight(flight.id, 'status', e.target.value)} placeholder="Confirmed" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+              </>
+              )}
+            </div>
+          )}
+
+          {/* Tab: Hotels */}
+          {activeTab === 'hotels' && (
+            <div className="space-y-6">
+              {/* Toggle Section */}
+              <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-6 rounded-xl border-4 border-green-300 shadow-lg">
+                <div className="flex items-center justify-between gap-8">
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-green-700 mb-3">🏨 تفعيل قسم حجوزات الفنادق</h3>
+                    <p className="text-gray-700 text-base font-medium">فعّل هذا الخيار لإظهار حجوزات الفنادق في التأكيد النهائي</p>
+                  </div>
+                  
+                  <div className="flex flex-col items-center gap-3">
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input type="checkbox" checked={formData.hotelsEnabled} onChange={() => toggleSection('hotelsEnabled')} className="sr-only peer" />
+                      <div className="w-20 h-10 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:right-[6px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-8 after:w-8 after:transition-all peer-checked:bg-green-600 shadow-lg"></div>
+                    </label>
+                    <span className={`text-sm font-bold px-4 py-1 rounded-full ${formData.hotelsEnabled ? 'bg-green-600 text-white' : 'bg-gray-300 text-gray-800'}`}>
+                      {formData.hotelsEnabled ? '✓ مفعّل' : '✗ غير مفعّل'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {formData.hotelsEnabled && (
+              <>
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-2xl font-bold text-green-600">🏨 حجوزات الفنادق</h3>
+                <button onClick={addHotel} className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                  <Plus size={18} />
+                  إضافة فندق
+                </button>
+              </div>
+
+              {formData.hotels.map((hotel, index) => (
+                <div key={hotel.id} className="bg-green-50 p-6 rounded-lg relative">
+                  <button onClick={() => removeHotel(hotel.id)} className="absolute top-4 left-4 text-red-600 hover:text-red-800">
+                    <Trash2 size={20} />
+                  </button>
+                  
+                  <h4 className="text-lg font-bold text-green-600 mb-4">فندق {index + 1}</h4>
+                  
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className="col-span-2">
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">اسم الفندق</label>
+                      <input type="text" value={hotel.name} onChange={(e) => updateHotel(hotel.id, 'name', e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div className="col-span-2">
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">صورة الفندق (رابط)</label>
+                      <input type="text" value={hotel.image} onChange={(e) => updateHotel(hotel.id, 'image', e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">العنوان</label>
+                      <input type="text" value={hotel.address} onChange={(e) => updateHotel(hotel.id, 'address', e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">الهاتف</label>
+                      <input type="text" value={hotel.phone} onChange={(e) => updateHotel(hotel.id, 'phone', e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">تاريخ الوصول</label>
+                      <input type="text" value={hotel.checkIn} onChange={(e) => updateHotel(hotel.id, 'checkIn', e.target.value)} placeholder="09 January 2026" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">تاريخ المغادرة</label>
+                      <input type="text" value={hotel.checkOut} onChange={(e) => updateHotel(hotel.id, 'checkOut', e.target.value)} placeholder="10 January 2026" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div className="col-span-2">
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">نوع الغرفة</label>
+                      <input type="text" value={hotel.roomType} onChange={(e) => updateHotel(hotel.id, 'roomType', e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">عدد الليالي</label>
+                      <input type="text" value={hotel.nights} onChange={(e) => updateHotel(hotel.id, 'nights', e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">عدد الغرف</label>
+                      <input type="text" value={hotel.rooms} onChange={(e) => updateHotel(hotel.id, 'rooms', e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">عدد الضيوف</label>
+                      <input type="text" value={hotel.guests} onChange={(e) => updateHotel(hotel.id, 'guests', e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">الحالة</label>
+                      <input type="text" value={hotel.status} onChange={(e) => updateHotel(hotel.id, 'status', e.target.value)} placeholder="Confirmed" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+              </>
+              )}
+            </div>
+          )}
+
+          {/* Tab: Car Rental */}
+          {activeTab === 'carrental' && (
+            <div className="space-y-6">
+              {/* Toggle Section */}
+              <div className="bg-gradient-to-r from-orange-50 to-yellow-50 p-6 rounded-xl border-4 border-orange-300 shadow-lg">
+                <div className="flex items-center justify-between gap-8">
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-orange-700 mb-3">🚗 تفعيل قسم استئجار السيارات</h3>
+                    <p className="text-gray-700 text-base font-medium">فعّل هذا الخيار لإظهار تفاصيل استئجار السيارات في التأكيد النهائي</p>
+                  </div>
+                  
+                  <div className="flex flex-col items-center gap-3">
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input type="checkbox" checked={formData.carRentalEnabled} onChange={() => toggleSection('carRentalEnabled')} className="sr-only peer" />
+                      <div className="w-20 h-10 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:right-[6px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-8 after:w-8 after:transition-all peer-checked:bg-orange-600 shadow-lg"></div>
+                    </label>
+                    <span className={`text-sm font-bold px-4 py-1 rounded-full ${formData.carRentalEnabled ? 'bg-orange-600 text-white' : 'bg-gray-300 text-gray-800'}`}>
+                      {formData.carRentalEnabled ? '✓ مفعّل' : '✗ غير مفعّل'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {formData.carRentalEnabled && (
+              <>
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-2xl font-bold text-orange-600">🚗 استئجار السيارات</h3>
+                <button onClick={addCarRental} className="flex items-center gap-2 px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700">
+                  <Plus size={18} />
+                  إضافة سيارة
+                </button>
+              </div>
+
+              {formData.carRentals.map((rental, index) => (
+                <div key={rental.id} className="bg-orange-50 p-6 rounded-lg relative">
+                  <button onClick={() => removeCarRental(rental.id)} className="absolute top-4 left-4 text-red-600 hover:text-red-800">
+                    <Trash2 size={20} />
+                  </button>
+                  
+                  <h4 className="text-lg font-bold text-orange-600 mb-4">سيارة {index + 1}</h4>
+                  
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className="col-span-2">
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">نوع السيارة</label>
+                      <input type="text" value={rental.carType} onChange={(e) => updateCarRental(rental.id, 'carType', e.target.value)} placeholder="Toyota Camry 2024" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div className="col-span-2">
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">صورة السيارة (رابط)</label>
+                      <input type="text" value={rental.carImage} onChange={(e) => updateCarRental(rental.id, 'carImage', e.target.value)} placeholder="https://example.com/car.jpg" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">اسم الشركة</label>
+                      <input type="text" value={rental.company} onChange={(e) => updateCarRental(rental.id, 'company', e.target.value)} placeholder="Budget Rent a Car" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">الحالة</label>
+                      <input type="text" value={rental.status} onChange={(e) => updateCarRental(rental.id, 'status', e.target.value)} placeholder="Confirmed" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">تاريخ الاستلام | Pick-up Date</label>
+                      <input type="text" value={rental.pickupDate} onChange={(e) => updateCarRental(rental.id, 'pickupDate', e.target.value)} placeholder="09 January 2026" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">تاريخ التسليم | Return Date</label>
+                      <input type="text" value={rental.returnDate} onChange={(e) => updateCarRental(rental.id, 'returnDate', e.target.value)} placeholder="14 January 2026" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">مكان الاستلام | Pick-up Location</label>
+                      <input type="text" value={rental.pickupLocation} onChange={(e) => updateCarRental(rental.id, 'pickupLocation', e.target.value)} placeholder="Bangkok Suvarnabhumi Airport" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">مكان التسليم | Return Location</label>
+                      <input type="text" value={rental.returnLocation} onChange={(e) => updateCarRental(rental.id, 'returnLocation', e.target.value)} placeholder="Bangkok Suvarnabhumi Airport" className="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+              </>
+              )}
+            </div>
+          )}
+
+          {/* Tab: Important Notes */}
+          {activeTab === 'notes' && (
+            <div className="space-y-6">
+              {/* Toggle Section */}
+              <div className="bg-gradient-to-r from-red-50 to-pink-50 p-6 rounded-xl border-4 border-red-300 shadow-lg">
+                <div className="flex items-center justify-between gap-8">
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-red-700 mb-3">ℹ️ تفعيل قسم المعلومات الهامة</h3>
+                    <p className="text-gray-700 text-base font-medium">فعّل هذا الخيار لإظهار الملاحظات والمعلومات الهامة في التأكيد النهائي</p>
+                  </div>
+                  
+                  <div className="flex flex-col items-center gap-3">
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input type="checkbox" checked={formData.importantNotesEnabled} onChange={() => toggleSection('importantNotesEnabled')} className="sr-only peer" />
+                      <div className="w-20 h-10 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:right-[6px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-8 after:w-8 after:transition-all peer-checked:bg-red-600 shadow-lg"></div>
+                    </label>
+                    <span className={`text-sm font-bold px-4 py-1 rounded-full ${formData.importantNotesEnabled ? 'bg-red-600 text-white' : 'bg-gray-300 text-gray-800'}`}>
+                      {formData.importantNotesEnabled ? '✓ مفعّل' : '✗ غير مفعّل'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {formData.importantNotesEnabled && (
+              <>
+              <div className="bg-blue-50 p-6 rounded-lg">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-xl font-bold text-blue-600">✈️ معلومات الطيران</h3>
+                  <button onClick={addFlightNote} className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                    <Plus size={18} />
+                    إضافة ملاحظة
+                  </button>
+                </div>
+                <div className="space-y-3">
+                  {formData.flightNotes.map((note, index) => (
+                    <div key={index} className="flex gap-2">
+                      <input type="text" value={note} onChange={(e) => updateFlightNote(index, e.target.value)} className="flex-1 px-4 py-2 border border-gray-300 rounded-lg" />
+                      <button onClick={() => removeFlightNote(index)} className="text-red-600 hover:text-red-800">
+                        <Trash2 size={20} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="bg-green-50 p-6 rounded-lg">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-xl font-bold text-green-600">🏨 معلومات الفنادق</h3>
+                  <button onClick={addHotelNote} className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                    <Plus size={18} />
+                    إضافة ملاحظة
+                  </button>
+                </div>
+                <div className="space-y-3">
+                  {formData.hotelNotes.map((note, index) => (
+                    <div key={index} className="flex gap-2">
+                      <input type="text" value={note} onChange={(e) => updateHotelNote(index, e.target.value)} className="flex-1 px-4 py-2 border border-gray-300 rounded-lg" />
+                      <button onClick={() => removeHotelNote(index)} className="text-red-600 hover:text-red-800">
+                        <Trash2 size={20} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              </>
+              )}
+            </div>
+          )}
+        </div>
+
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+          <h3 className="font-bold text-blue-800 mb-3">💡 كيفية استخدام البرنامج:</h3>
+          <ol className="list-decimal list-inside space-y-2 text-blue-900 mr-4">
+            <li>افتح كل تبويب واضغط على زر التفعيل لإظهار القسم في الملف النهائي</li>
+            <li>املأ معلومات الضيف في التبويب الأول</li>
+            <li>أضف رحلات الطيران الداخلي والدولي حسب الحاجة</li>
+            <li>أضف حجوزات الفنادق بالتفاصيل الكاملة</li>
+            <li>أضف تفاصيل استئجار السيارات إذا كان متوفراً</li>
+            <li>أضف الملاحظات الهامة في التبويب الأخير</li>
+            <li>اضغط على زر "تحميل التأكيد" للحصول على الملف</li>
+            <li>افتح الملف في أي متصفح للمعاينة</li>
+            <li>للحفظ كـ PDF: اضغط Ctrl+P واختر "Save as PDF"</li>
+          </ol>
+          <div className="mt-4 p-4 bg-yellow-50 border-2 border-yellow-300 rounded-lg">
+            <p className="text-yellow-800 font-semibold">⚠️ ملاحظة: الأقسام غير المفعّلة لن تظهر في الملف النهائي</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+        // Render the app
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<BookingConfirmationGenerator />);
     </script>
 </body>
 </html>
