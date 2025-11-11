@@ -1,0 +1,20 @@
+{
+  "name": "etlaala-booking-confirmation",
+  "version": "1.0.0",
+  "description": "برنامج إنشاء تأكيدات حجوزات شركة اطلالة للسفر والسياحة",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "echo 'No build required - Static HTML'",
+    "start": "npx serve ."
+  },
+  "keywords": [
+    "booking",
+    "confirmation",
+    "travel",
+    "tourism",
+    "etlaala"
+  ],
+  "author": "Etlaala Travel & Tourism",
+  "license": "MIT"
+}
